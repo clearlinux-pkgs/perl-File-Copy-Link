@@ -4,16 +4,17 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.140
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libf/libfile-copy-link-perl/libfile-copy-link-perl_0.140-2.debian.tar.xz
 Summary  : 'extension for replacing a link by a copy of the linked file'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-File-Copy-Link-bin
-Requires: perl-File-Copy-Link-license
-Requires: perl-File-Copy-Link-man
+Requires: perl-File-Copy-Link-bin = %{version}-%{release}
+Requires: perl-File-Copy-Link-license = %{version}-%{release}
+Requires: perl-File-Copy-Link-man = %{version}-%{release}
+BuildRequires : buildreq-cpan
 
 %description
 File-Copy-Link version 0.14
@@ -25,11 +26,21 @@ copylink.  They include routines to read and copy links.
 %package bin
 Summary: bin components for the perl-File-Copy-Link package.
 Group: Binaries
-Requires: perl-File-Copy-Link-license
-Requires: perl-File-Copy-Link-man
+Requires: perl-File-Copy-Link-license = %{version}-%{release}
+Requires: perl-File-Copy-Link-man = %{version}-%{release}
 
 %description bin
 bin components for the perl-File-Copy-Link package.
+
+
+%package dev
+Summary: dev components for the perl-File-Copy-Link package.
+Group: Development
+Requires: perl-File-Copy-Link-bin = %{version}-%{release}
+Provides: perl-File-Copy-Link-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-File-Copy-Link package.
 
 
 %package license
@@ -49,10 +60,10 @@ man components for the perl-File-Copy-Link package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n File-Copy-Link-0.140
-mkdir -p %{_topdir}/BUILD/File-Copy-Link-0.140/deblicense/
+cd ..
+%setup -q -T -D -n File-Copy-Link-0.140 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/File-Copy-Link-0.140/deblicense/
 
 %build
@@ -77,12 +88,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-File-Copy-Link
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-File-Copy-Link/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -91,19 +102,22 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/File/Copy/Link.pm
-/usr/lib/perl5/site_perl/5.26.1/File/Spec/Link.pm
+/usr/lib/perl5/vendor_perl/5.26.1/File/Copy/Link.pm
+/usr/lib/perl5/vendor_perl/5.26.1/File/Spec/Link.pm
 
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/copylink
 
-%files license
+%files dev
 %defattr(-,root,root,-)
-/usr/share/doc/perl-File-Copy-Link/deblicense_copyright
-
-%files man
-%defattr(-,root,root,-)
-/usr/share/man/man1/copylink.1
 /usr/share/man/man3/File::Copy::Link.3
 /usr/share/man/man3/File::Spec::Link.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-File-Copy-Link/deblicense_copyright
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/copylink.1
