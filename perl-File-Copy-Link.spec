@@ -4,11 +4,11 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.140
-Release  : 9
+Release  : 10
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libf/libfile-copy-link-perl/libfile-copy-link-perl_0.140-2.debian.tar.xz
-Summary  : 'extension for replacing a link by a copy of the linked file'
+Summary  : extension for replacing a link by a copy of the linked file
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-File-Copy-Link-bin = %{version}-%{release}
@@ -27,7 +27,6 @@ copylink.  They include routines to read and copy links.
 Summary: bin components for the perl-File-Copy-Link package.
 Group: Binaries
 Requires: perl-File-Copy-Link-license = %{version}-%{release}
-Requires: perl-File-Copy-Link-man = %{version}-%{release}
 
 %description bin
 bin components for the perl-File-Copy-Link package.
@@ -38,6 +37,7 @@ Summary: dev components for the perl-File-Copy-Link package.
 Group: Development
 Requires: perl-File-Copy-Link-bin = %{version}-%{release}
 Provides: perl-File-Copy-Link-devel = %{version}-%{release}
+Requires: perl-File-Copy-Link = %{version}-%{release}
 
 %description dev
 dev components for the perl-File-Copy-Link package.
@@ -64,7 +64,7 @@ man components for the perl-File-Copy-Link package.
 cd ..
 %setup -q -T -D -n File-Copy-Link-0.140 -b 1
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/File-Copy-Link-0.140/deblicense/
+cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/File-Copy-Link-0.140/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
