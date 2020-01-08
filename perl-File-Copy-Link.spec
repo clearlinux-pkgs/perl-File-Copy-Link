@@ -4,16 +4,17 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.140
-Release  : 12
+Release  : 13
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libf/libfile-copy-link-perl/libfile-copy-link-perl_0.140-2.debian.tar.xz
-Summary  : extension for replacing a link by a copy of the linked file
+Summary  : 'extension for replacing a link by a copy of the linked file'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-File-Copy-Link-bin = %{version}-%{release}
 Requires: perl-File-Copy-Link-license = %{version}-%{release}
 Requires: perl-File-Copy-Link-man = %{version}-%{release}
+Requires: perl-File-Copy-Link-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -59,18 +60,28 @@ Group: Default
 man components for the perl-File-Copy-Link package.
 
 
+%package perl
+Summary: perl components for the perl-File-Copy-Link package.
+Group: Default
+Requires: perl-File-Copy-Link = %{version}-%{release}
+
+%description perl
+perl components for the perl-File-Copy-Link package.
+
+
 %prep
 %setup -q -n File-Copy-Link-0.140
-cd ..
-%setup -q -T -D -n File-Copy-Link-0.140 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libfile-copy-link-perl_0.140-2.debian.tar.xz
+cd %{_builddir}/File-Copy-Link-0.140
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/File-Copy-Link-0.140/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/File-Copy-Link-0.140/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -80,7 +91,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -89,7 +100,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link/deblicense_copyright
+cp %{_builddir}/File-Copy-Link-0.140/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link/1d05ddeaeb5ca9b5fda3d0db44ee6ed6c9ae2661
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -102,8 +113,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/File/Copy/Link.pm
-/usr/lib/perl5/vendor_perl/5.28.2/File/Spec/Link.pm
 
 %files bin
 %defattr(-,root,root,-)
@@ -116,8 +125,13 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-File-Copy-Link/deblicense_copyright
+/usr/share/package-licenses/perl-File-Copy-Link/1d05ddeaeb5ca9b5fda3d0db44ee6ed6c9ae2661
 
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/copylink.1
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/File/Copy/Link.pm
+/usr/lib/perl5/vendor_perl/5.30.1/File/Spec/Link.pm
