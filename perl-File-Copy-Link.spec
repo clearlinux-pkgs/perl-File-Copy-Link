@@ -4,7 +4,7 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.140
-Release  : 13
+Release  : 14
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libf/libfile-copy-link-perl/libfile-copy-link-perl_0.140-2.debian.tar.xz
@@ -100,7 +100,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link
-cp %{_builddir}/File-Copy-Link-0.140/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link/1d05ddeaeb5ca9b5fda3d0db44ee6ed6c9ae2661
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-File-Copy-Link/1d05ddeaeb5ca9b5fda3d0db44ee6ed6c9ae2661
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -133,5 +133,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/File/Copy/Link.pm
-/usr/lib/perl5/vendor_perl/5.30.1/File/Spec/Link.pm
+/usr/lib/perl5/vendor_perl/5.30.2/File/Copy/Link.pm
+/usr/lib/perl5/vendor_perl/5.30.2/File/Spec/Link.pm
