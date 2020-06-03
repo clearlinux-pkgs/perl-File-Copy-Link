@@ -4,7 +4,7 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.140
-Release  : 14
+Release  : 15
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.140.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libf/libfile-copy-link-perl/libfile-copy-link-perl_0.140-2.debian.tar.xz
@@ -133,5 +133,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/File/Copy/Link.pm
-/usr/lib/perl5/vendor_perl/5.30.2/File/Spec/Link.pm
+/usr/lib/perl5/vendor_perl/5.30.3/File/Copy/Link.pm
+/usr/lib/perl5/vendor_perl/5.30.3/File/Spec/Link.pm
