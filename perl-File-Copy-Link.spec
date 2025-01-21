@@ -7,7 +7,7 @@
 #
 Name     : perl-File-Copy-Link
 Version  : 0.200
-Release  : 29
+Release  : 30
 URL      : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.200.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Copy-Link-0.200.tar.gz
 Summary  : 'extension for replacing a link by a copy of the linked file'
